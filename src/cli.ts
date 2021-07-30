@@ -7,14 +7,12 @@ import * as babel from "@babel/core";
 import fs from "fs-extra";
 import path from "path";
 
-import type { CompilerOptions } from "typescript";
-
 interface Args {
   cwd?: string;
   source?: string;
   outDir?: string;
   nodeVersion?: number;
-  declaration?: boolean | string;
+  declaration?: boolean;
 }
 
 const argv = parser(process.argv.slice(2), {
@@ -75,28 +73,28 @@ files.forEach((filePath) => {
 
 if (declaration) {
   const sourceTscConfig = path.join(cwd, "tsconfig.json");
-  const tsConfigPath =
-    typeof declaration === "boolean" ? sourceTscConfig : declaration;
   let originContent;
   if (fs.existsSync(sourceTscConfig)) {
     originContent = fs.readFileSync(sourceTscConfig, "utf-8");
-  } else if (typeof declaration === "boolean") {
+  } else {
     fs.writeFileSync(sourceTscConfig, "{}", "utf-8");
   }
-  const options = require(tsConfigPath);
+  const options = require(sourceTscConfig);
   options.include = [source];
   options.compilerOptions = Object.assign({}, options.compilerOptions, {
+    target: "ESNext",
     noEmit: false,
     declaration: true,
     emitDeclarationOnly: true,
     declarationDir: outDir,
     esModuleInterop: true,
-  } as CompilerOptions);
+    moduleResolution: "node",
+  });
   try {
-    fs.writeFileSync(tsConfigPath, JSON.stringify(options));
+    fs.writeFileSync(sourceTscConfig, JSON.stringify(options));
     execSync("tsc", { stdio: "inherit" });
   } finally {
-    fs.removeSync(tsConfigPath);
+    fs.removeSync(sourceTscConfig);
     if (originContent) {
       fs.writeFileSync(sourceTscConfig, originContent, "utf-8");
     }
