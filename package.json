@@ -1,12 +1,15 @@
 {
   "name": "cjsb",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "bin": {
-    "cjsb": "./cli.js"
+    "cjsb": "./lib/cli.js"
+  },
+  "scripts": {
+    "build": "cjsb"
   },
   "license": "MIT",
   "files": [
-    "./cli.js"
+    "lib"
   ],
   "devDependencies": {
     "@types/babel__core": "^7.1.15",
@@ -19,6 +22,7 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-typescript": "^7.14.5",
+    "cjsb": "^0.0.3",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.7",
     "yargs-parser": "^20.2.9"
