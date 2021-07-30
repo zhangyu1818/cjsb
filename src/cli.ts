@@ -90,6 +90,7 @@ if (declaration) {
     declaration: true,
     emitDeclarationOnly: true,
     declarationDir: outDir,
+    esModuleInterop: true,
   } as CompilerOptions);
   try {
     fs.writeFileSync(tsConfigPath, JSON.stringify(options));
