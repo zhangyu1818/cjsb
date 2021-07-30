@@ -77,27 +77,27 @@ if (declaration) {
   const sourceTscConfig = path.join(cwd, "tsconfig.json");
   const tsConfigPath =
     typeof declaration === "boolean" ? sourceTscConfig : declaration;
-  if (fs.existsSync(tsConfigPath)) {
-    let originContent;
-    if (fs.existsSync(sourceTscConfig)) {
-      originContent = fs.readFileSync(sourceTscConfig, "utf-8");
-    }
-    const options = require(tsConfigPath);
-    options.include = [source];
-    options.compilerOptions = Object.assign({}, options.compilerOptions, {
-      noEmit: false,
-      declaration: true,
-      emitDeclarationOnly: true,
-      declarationDir: outDir,
-    } as CompilerOptions);
-    try {
-      fs.writeFileSync(tsConfigPath, JSON.stringify(options));
-      execSync("tsc", { stdio: "inherit" });
-    } finally {
-      fs.removeSync(tsConfigPath);
-      if (originContent) {
-        fs.writeFileSync(sourceTscConfig, originContent, "utf-8");
-      }
+  let originContent;
+  if (fs.existsSync(sourceTscConfig)) {
+    originContent = fs.readFileSync(sourceTscConfig, "utf-8");
+  } else if (typeof declaration === "boolean") {
+    fs.writeFileSync(sourceTscConfig, "{}", "utf-8");
+  }
+  const options = require(tsConfigPath);
+  options.include = [source];
+  options.compilerOptions = Object.assign({}, options.compilerOptions, {
+    noEmit: false,
+    declaration: true,
+    emitDeclarationOnly: true,
+    declarationDir: outDir,
+  } as CompilerOptions);
+  try {
+    fs.writeFileSync(tsConfigPath, JSON.stringify(options));
+    execSync("tsc", { stdio: "inherit" });
+  } finally {
+    fs.removeSync(tsConfigPath);
+    if (originContent) {
+      fs.writeFileSync(sourceTscConfig, originContent, "utf-8");
     }
   }
 }
