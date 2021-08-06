@@ -1,6 +1,6 @@
 {
   "name": "cjsb",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "bin": {
     "cjsb": "./lib/cli.js"
   },
@@ -22,7 +22,7 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-typescript": "^7.14.5",
-    "cjsb": "^0.0.3",
+    "cjsb": "^0.0.7",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.7",
     "yargs-parser": "^20.2.9"

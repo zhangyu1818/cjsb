@@ -40,7 +40,7 @@ const packages = monorepo
 
 if (monorepo) {
   console.log("cjsb will build");
-  monorepo.forEach(console.log);
+  monorepo.forEach((name) => console.log(name));
 }
 
 const toJsFile = (filePath: string) => {
