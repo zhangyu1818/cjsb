@@ -2,7 +2,7 @@
 
 A CLI tool to build the CommonJS library quickly.
 
-It supports JavaScript and TypeScript and Monorepo.
+It supports JavaScript, TypeScript and Monorepo.
 
 ## installation
 
