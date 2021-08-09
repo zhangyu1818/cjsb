@@ -1,8 +1,6 @@
 # cjsb
 
-A CLI tool to build the CommonJS library quickly.
-
-It supports JavaScript, TypeScript and Monorepo.
+A CLI tool to build the CommonJS library quickly, supports JavaScript, TypeScript and Monorepo.
 
 ## installation
 
